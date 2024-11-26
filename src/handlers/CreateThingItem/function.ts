@@ -133,6 +133,7 @@ export async function handler_upsert (event: APIGatewayProxyEvent, context: Cont
 
      /*
     // Validate requested ID against body data
+    // For use when item keys can be deduced from the body data
     if (
         itemData. !== event.pathParameters?.id
     ) {

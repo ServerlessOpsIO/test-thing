@@ -41,7 +41,7 @@ export async function getItem(itemKeys: ThingItemKeys): Promise<ThingItemData> {
             'pk': { S: itemKeys.pk },
             'sk': { S: itemKeys.sk }
         },
-        ProjectionExpression: 'apiVersion, kind, metadata, spec'
+        //ProjectionExpression: 'key1, key2, key3',
     }
 
     let output: GetItemCommandOutput
@@ -63,6 +63,10 @@ export async function getItem(itemKeys: ThingItemKeys): Promise<ThingItemData> {
     if ( typeof output.Item == 'undefined' ) {
         throw new Error('ThingItem not found')
     }
+
+    // remove DDB keys
+    delete output.Item.pk
+    delete output.Item.sk
 
     return unmarshall(output.Item) as ThingItemData
 }

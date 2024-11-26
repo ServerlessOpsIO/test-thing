@@ -40,10 +40,11 @@ jobs:
       - name: Validate template
         run: sam validate --lint
 
-      # TODO: Need to run tests when we have them
-
       - name: Compile Typescript
         run: yarn run compile
+
+      - name: Run unit tests
+        run: yarn run test:unit
 
       - name: Build deployment artifact
         run: yarn run sam:build
