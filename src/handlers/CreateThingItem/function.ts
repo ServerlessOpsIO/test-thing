@@ -15,6 +15,7 @@ import {
 import {
     marshall
 } from '@aws-sdk/util-dynamodb'
+import { CreateResponseType } from '../../lib/CreateResponseType.js'
 import { SuccessResponseType } from '../../lib/SuccessResponseType.js'
 import { ErrorResponseType } from '../../lib/ErrorResponseType.js'
 import { ThingItemKeys, ThingItemData, ThingItem, createKeys, getKeys } from '../../lib/ThingItem.js'
@@ -78,7 +79,6 @@ export async function putItem(itemKeys: ThingItemKeys, itemDada: ThingItemData, 
 export async function handler_create (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> {
     LOGGER.debug('Received event', { event })
 
-    const request_id = context.awsRequestId
     const itemKeys = createKeys()
     const itemData: ThingItemData = JSON.parse(event.body || '{}')
 
@@ -87,7 +87,7 @@ export async function handler_create (event: APIGatewayProxyEvent, context: Cont
     try {
         await putItem(itemKeys, itemData, false)
         statusCode = 201
-        const response: SuccessResponseType = { "request_id": request_id }
+        const response: CreateResponseType = { "id": itemKeys.pk }
         body = JSON.stringify(response)
 
     } catch (error) {

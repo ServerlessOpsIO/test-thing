@@ -10,7 +10,16 @@ import {
 import {
     marshall
 } from '@aws-sdk/util-dynamodb'
+
 import { ThingItemKeys, ThingItemData } from '../../lib/ThingItem.js'
+jest.mock('../../lib/ThingItem.js', () => {
+    return {
+        ...jest.requireActual('../../lib/ThingItem.js'),
+        createKeys: jest.fn(() => ({ pk: 'id', sk: 'id' })),
+        getKeys: jest.fn(() => ({ pk: 'id', sk: 'id' })),
+    }
+})
+
 
 // Mock clients
 const mockDdbClient = mockClient(DynamoDBClient)
@@ -107,7 +116,7 @@ describe('CreateThingItem', () => {
             test('createing item', async () => {
                 const result = await func.handler_create(event, context)
                 expect(result.statusCode).toBe(201)
-                expect(JSON.parse(result.body)).toEqual({ request_id: 'request-id' })
+                expect(JSON.parse(result.body)).toEqual({ id: 'id' })
             })
         })
 

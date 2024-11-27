@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateThingItemResponse"
+                $ref: "#/components/schemas/CreateThingResponse"
         '400':
           description: Client failure
           content:
@@ -235,13 +235,13 @@ components:
         - apiVersion
         - kind
         - metadata
-    CreateItemResponse:
+    CreateThingResponse:
       type: object
       properties:
         request_id:
           type: string
       required:
-        - request_id
+        - id
     EmptyResponse:
       type: object
     RequestIdResponse:
