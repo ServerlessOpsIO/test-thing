@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  test-thing
+
+  TEST
+
+
+Parameters:
+  Domain:
+    Type: String
+    Description: 'Name of Domain'
+
+  System:
+    Type: String
+    Description: "Name of System"
+
+  Component:
+    Type: String
+    Description: "Name of Component"
+
+  CodeBranch:
+    Type: String
+    Description: "Name of GitHub Branch"
+
+Resources: {}

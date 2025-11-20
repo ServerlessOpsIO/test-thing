@@ -1,0 +1,13 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-thing
+  description: TEST
+  annotations:
+    github.com/project-slug: ServerlessOpsIO/test-thing
+spec:
+  type: iac
+  lifecycle: production
+  owner: group:00gjdgxs1ur6lsu
+  system: system:backstage
