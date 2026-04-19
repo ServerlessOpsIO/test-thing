@@ -1,6 +1,6 @@
 # Backstage / test-thing
 
-TEST
+Creates an SQS queue, a DynamoDB table, and a Lambda consumer that writes each SQS message body to DynamoDB.
 
 
 ## New Project Getting Started

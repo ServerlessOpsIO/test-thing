@@ -23,4 +23,39 @@ Parameters:
     Type: String
     Description: "Name of GitHub Branch"
 
-Resources: {}
+Resources:
+  MessageTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: MessageId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: MessageId
+          KeyType: HASH
+      TableName: !Sub "${Domain}-${System}-${Component}-${CodeBranch}-messages"
+
+  MessageQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${Domain}-${System}-${Component}-${CodeBranch}-queue"
+
+  MessageConsumerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      CodeUri: src/
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref MessageTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MessageTable
+      Events:
+        MessageQueueEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt MessageQueue.Arn
+            BatchSize: 10
